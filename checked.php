@@ -32,7 +32,7 @@
             }
         }
     }
-    echo "<a href='index.php'><div class='next'>Losowe pytanie</div></a>";
+    echo "<a href='question.php'><div class='next'>Losowe pytanie</div></a>";
     
     $db->close();
     ?>
