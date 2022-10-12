@@ -15,7 +15,7 @@
     $sql = "SELECT `id`, `name` FROM `users` WHERE 1;";
     if($res = $db->query($sql)){
         while($row = $res->fetch_assoc()){
-            echo "<form action='checked.php' method='POST'>";
+            echo "<form action='question.php' method='POST'>";
             echo "<input type='hidden' name='userID' value=".$row["id"]."/>";
             echo "<input type='submit' value='".$row["name"]."'/>";
             echo "</form>";
