@@ -22,17 +22,17 @@
         while($rowQuestion = $resQuestion->fetch_assoc()){
             echo "<div class='question'>".$rowQuestion["question"]."</div>";
             echo "<div style='clear: both;'></div>";
-
+			
+			echo "<form action='checked.php' method='POST'>";
+			echo "<input type='hidden' name='questionID' value=".$rowQuestion["id"].">";
             $sqlAnserws = "SELECT `id`, `anserw`, `is_correct` FROM `anserws` WHERE `question_id` = ".$rowQuestion["id"].";";
             if($resAnserws = $db->query($sqlAnserws)){
                 while($rowAnserw = $resAnserws->fetch_assoc()){
-                    echo "<form action='checked.php' method='POST'>
-                            <input type='hidden' name='questionID' value=".$rowQuestion["id"].">
-                            <input type='hidden' name='anserwID' value=".$rowAnserw["id"].">
-                            <input type='submit' value='".$rowAnserw["anserw"]."'>
-                        </form>";
+                    echo "<input type='checkbox' name='anserwIDs[]' value=".$rowAnserw["id"]."><label>".$rowAnserw["anserw"]."</label>";
                 }
             }
+			echo "<input type='submit' value='Kolejne pytanie'>";
+			echo "</form>";
         }
     }
     $db->close();

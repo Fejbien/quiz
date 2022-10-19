@@ -13,8 +13,10 @@
 
     $db = new mysqli("localhost", "root", "", "quiz");
     $questionID = $_POST["questionID"];
-    $anserwID = $_POST["anserwID"];
+    $anserwIDs = $_POST["anserwIDs"];
     $correctAnserwID = [];
+
+	print_r($anserwIDs);
 
     // Wypisuje pytanie i odpowiedzi zaznaczajac czy jest poprawna czy tez i nie
     $sqlQuestion = "SELECT `id`, `question` FROM `questions` WHERE id = ".$questionID.";";
@@ -26,10 +28,15 @@
             if($resAnserws = $db->query($sqlAnserws)){
                 while($rowAnserw = $resAnserws->fetch_assoc()){
                     if($rowAnserw["is_correct"] != null){
+						if(in_array($rowAnserw["id"], $anserwIDs)){
+							echo "<div class='anserws' style='background-color: blue;'>".$rowAnserw["anserw"]."</div>";
+						}
+						else{
+							echo "<div class='anserws' style='background-color: green;'>".$rowAnserw["anserw"]."</div>";
+						}
                         array_push($correctAnserwID, $rowAnserw["id"]);
-                        echo "<div class='anserws' style='background-color: green;'>".$rowAnserw["anserw"]."</div>";
                     }
-                    else if($rowAnserw["id"] == $anserwID){
+                    else if(in_array($rowAnserw["id"], $anserwIDs)){
                         echo "<div class='anserws' style='background-color: red;'>".$rowAnserw["anserw"]."</div>";
                     }
                     else{
@@ -41,11 +48,13 @@
     }
 
     // Przydziela wynik
-    if(in_array($anserwID, $correctAnserwID)){
-        $db->query("UPDATE `users` SET `right`=`right`+1 WHERE id = ".$_COOKIE["userID"].";");
-    }else{
-        $db->query("UPDATE `users` SET `wrong`=`wrong`+1 WHERE id = ".$_COOKIE["userID"].";");
-    }
+	for($i = 0; $i < count($anserwIDs); $i++){
+		if(in_array($anserwIDs[$i], $correctAnserwID)){
+			$db->query("UPDATE `users` SET `right`=`right`+1 WHERE id = ".$_COOKIE["userID"].";");
+		}else{
+			$db->query("UPDATE `users` SET `wrong`=`wrong`+1 WHERE id = ".$_COOKIE["userID"].";");
+		}
+	}
     
     echo "<form action='question.php' method='POST'>
             <input class='next' type='submit' value='Losowe pytanie'>
