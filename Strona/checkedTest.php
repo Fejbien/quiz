@@ -12,45 +12,50 @@
     include "Elements/menuGenerator.php";
 
     $db = new mysqli("localhost", "root", "", "quiz");
-    $questionID = $_POST["questionID"];
-    $anserwID = $_POST["anserwID"];
+
+    $questionsArray = unserialize($_POST["questionsArray"]);
+    $anserwsGiven = unserialize($_POST["anserwsGiven"]);
+
     $correctAnserwID = [];
 
-    // Wypisuje pytanie i odpowiedzi zaznaczajac czy jest poprawna czy tez i nie
-    $sqlQuestion = "SELECT `id`, `question` FROM `questions` WHERE id = ".$questionID.";";
-    if($resQuestion = $db->query($sqlQuestion)){
-        while($rowQuestion = $resQuestion->fetch_assoc()){
-            echo "<div class='question'>".$rowQuestion["question"]."</div>";
+    for($i = 0; $i < count($questionsArray); $i++){
+        $sqlQuestion = "SELECT `id`, `question` FROM `questions` WHERE id = ".$questionsArray[$i].";";
+        if($resQuestion = $db->query($sqlQuestion)){
+            while($rowQuestion = $resQuestion->fetch_assoc()){
+                echo "<div class='question'>".$rowQuestion["question"]."</div>";
 
-            $sqlAnserws = "SELECT `id`, `anserw`, `is_correct` FROM `anserws` WHERE `question_id` = ".$rowQuestion["id"];
-            if($resAnserws = $db->query($sqlAnserws)){
-                while($rowAnserw = $resAnserws->fetch_assoc()){
-                    if($rowAnserw["is_correct"] != null){
-                        array_push($correctAnserwID, $rowAnserw["id"]);
-                        echo "<div class='anserws' style='background-color: green;'>".$rowAnserw["anserw"]."</div>";
-                    }
-                    else if($rowAnserw["id"] == $anserwID){
-                        echo "<div class='anserws' style='background-color: red;'>".$rowAnserw["anserw"]."</div>";
-                    }
-                    else{
-                        echo "<div class='anserws'>".$rowAnserw["anserw"]."</div>";
+                $sqlAnserws = "SELECT `id`, `anserw`, `is_correct` FROM `anserws` WHERE `question_id` = ".$rowQuestion["id"];
+                if($resAnserws = $db->query($sqlAnserws)){
+                    while($rowAnserw = $resAnserws->fetch_assoc()){
+                        if($rowAnserw["is_correct"] != null){
+                            array_push($correctAnserwID, $rowAnserw["id"]);
+                            echo "<div class='anserws' style='background-color: green;'>".$rowAnserw["anserw"]."</div>";
+                        }
+                        else if($rowAnserw["id"] == $anserwsGiven[$i]){
+                            echo "<div class='anserws' style='background-color: red;'>".$rowAnserw["anserw"]."</div>";
+                        }
+                        else{
+                            echo "<div class='anserws'>".$rowAnserw["anserw"]."</div>";
+                        }
                     }
                 }
             }
         }
+        echo "<br><br>";
     }
 
-    // Przydziela wynik
-    if(in_array($anserwID, $correctAnserwID)){
-        $db->query("UPDATE `users` SET `right`=`right`+1 WHERE id = ".$_COOKIE["userID"].";");
-    }else{
-        $db->query("UPDATE `users` SET `wrong`=`wrong`+1 WHERE id = ".$_COOKIE["userID"].";");
+    $correctCount = 0;
+    for($i = 0; $i < count($anserwsGiven); $i++){
+        if(in_array($anserwsGiven[$i], $correctAnserwID))
+            $correctCount++;
     }
+
+    echo "<p style='margin: 10px auto 10px auto; text-align: center; font-size: 200%; font-weight: bold;'>
+            Ilosc podanych poprawynych odpowedzi to: $correctCount
+        </p>";
     
-    echo "<form action='test.php' method='POST'>
-            <input type='hidden' name='questionsArray' value=".$_POST["questionsArray"].">
-            <input type='hidden' name='questionNumber' value=".($_POST["questionNumber"]+1).">
-            <input class='next' type='submit' value='Nastepne pytanie'>
+    echo "<form action='index.php' method='POST'>
+            <input class='next' type='submit' value='Powrot'>
         </form>";
 
     $db->close();

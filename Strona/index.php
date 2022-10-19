@@ -26,9 +26,9 @@
         $row = $db->query($sql)->fetch_assoc();
         echo "<div class='info'>
                 <h1>Zalogowano jako: ".$row["name"]."</h1>
-                <p>Udzielone odpowiedzi: ".($row["right"] + $row["wrong"])."</p>
-                <p>Poprawne odpowiedzi: ".$row["right"]."</p>
-                <p><span style='color: red;'>Nie</span> poprawne odpowiedzi: ".$row["wrong"]."</p>
+                <p>Udzielone odpowiedzi losowe: ".($row["right"] + $row["wrong"])."</p>
+                <p>Poprawne odpowiedzi losowe: ".$row["right"]."</p>
+                <p><span style='color: red;'>Nie</span> poprawne odpowiedzi losowe: ".$row["wrong"]."</p>
 
                 <form action='logOut.php' method='POST'>
                     <input type='submit' value='WYLOGUJ SIE!'>

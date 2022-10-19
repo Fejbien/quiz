@@ -36,10 +36,11 @@
     }
 
     if($questionNumber >= $questionsCount){
-        echo "ZOBACZ ODPOWIEDZI";
-        
-        print_r($questionsArray);
-        print_r($anserwsGiven);
+        echo "<form action='checkedTest.php' method='POST'>
+                <input type='hidden' name='questionsArray' value=".serialize($questionsArray).">
+                <input type='hidden' name='anserwsGiven' value=".serialize($anserwsGiven).">
+                <input type='submit' value='Zobacz odpowiedzi'>
+            </form>";
     }
     else{
         // Wypisuje wylosowane pytania i kazda odpowiedz to przycisk ktory kieruje na strone sprawdzajaca podana odpowiedz
