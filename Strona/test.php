@@ -23,7 +23,7 @@
         $questionsArray = unserialize($_POST["questionsArray"]);
         $questionNumber = $_POST["questionNumber"];
         $anserwsGiven = unserialize($_POST["anserwsGiven"]);
-        array_push($anserwsGiven, $_POST["anserwID"]);
+        array_push($anserwsGiven, $_POST["anserwIDs"]);
     }
     else{
         while(count($questionsArray) < $questionsCount){
@@ -62,7 +62,7 @@
                         echo "<input type='checkbox' name='anserwIDs[]' value=".$rowAnserw["id"]."><label>".$rowAnserw["anserw"]."</label>";      
                     }
                 }
-                echo "<input type='submit' value='".$rowAnserw["anserw"]."'></form>";
+                echo "<input type='submit' value='Nastepne pytanie'></form>";
             }
         }
     }
