@@ -18,7 +18,6 @@
 
 	print_r($anserwIDs);
 
-    // Wypisuje pytanie i odpowiedzi zaznaczajac czy jest poprawna czy tez i nie
     $sqlQuestion = "SELECT `id`, `question` FROM `questions` WHERE id = ".$questionID.";";
     if($resQuestion = $db->query($sqlQuestion)){
         while($rowQuestion = $resQuestion->fetch_assoc()){
@@ -47,7 +46,6 @@
         }
     }
 
-    // Przydziela wynik
 	for($i = 0; $i < count($anserwIDs); $i++){
 		if(in_array($anserwIDs[$i], $correctAnserwID)){
 			$db->query("UPDATE `users` SET `right`=`right`+1 WHERE id = ".$_COOKIE["userID"].";");

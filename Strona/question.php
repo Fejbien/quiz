@@ -16,7 +16,6 @@
     $max = $db->query("SELECT COUNT(`id`) as `max` FROM `questions` WHERE 1;")->fetch_assoc()["max"];
     $randQuestion = rand(1, $max);
 
-    // Wypisuje wylosowane pytania i kazda odpowiedz to przycisk ktory kieruje na strone sprawdzajaca podana odpowiedz
     $sqlQuestion = "SELECT `id`, `question` FROM `questions` WHERE id = ".$randQuestion.";";
     if($resQuestion = $db->query($sqlQuestion)){
         while($rowQuestion = $resQuestion->fetch_assoc()){

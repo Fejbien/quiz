@@ -43,8 +43,6 @@
             </form>";
     }
     else{
-        // Wypisuje wylosowane pytania i kazda odpowiedz to przycisk ktory kieruje na strone sprawdzajaca podana odpowiedz
-        // Pieknie to wyglada
         $sqlQuestion = "SELECT `id`, `question` FROM `questions` WHERE id = ".$questionsArray[$questionNumber].";";
         if($resQuestion = $db->query($sqlQuestion)){
             while($rowQuestion = $resQuestion->fetch_assoc()){
@@ -59,7 +57,7 @@
                 $sqlAnserws = "SELECT `id`, `anserw`, `is_correct` FROM `anserws` WHERE `question_id` = ".$rowQuestion["id"].";";
                 if($resAnserws = $db->query($sqlAnserws)){
                     while($rowAnserw = $resAnserws->fetch_assoc()){
-                        echo "<input type='checkbox' name='anserwIDs[]' value=".$rowAnserw["id"]."><label>".$rowAnserw["anserw"]."</label>";      
+                        echo "<input type='checkbox' name='anserwIDs[]' value=".$rowAnserw["id"]."><label>".$rowAnserw["anserw"]."</label><br>";      
                     }
                 }
                 echo "<input type='submit' value='Nastepne pytanie'></form>";
