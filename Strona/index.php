@@ -33,8 +33,12 @@
                 <form action='logOut.php' method='POST'>
                     <input type='submit' value='WYLOGUJ SIE!'>
                 </form>
-                    <form action='question.php' method='POST'>
+                <form action='question.php' method='POST'>
                     <input class='next' type='submit' value='Losowe pytanie'>
+                </form>
+
+                <form action='test.php' method='POST'>
+                    <input class='next' type='submit' value='Zrob losowy test!'>
                 </form>
             </div>";
     }

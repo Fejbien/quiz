@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 12 Paź 2022, 14:24
+-- Czas generowania: 19 Paź 2022, 08:55
 -- Wersja serwera: 10.4.24-MariaDB
 -- Wersja PHP: 8.1.6
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `quiz`
 --
+CREATE DATABASE IF NOT EXISTS `quiz` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `quiz`;
 
 -- --------------------------------------------------------
 
@@ -41,17 +43,42 @@ CREATE TABLE `anserws` (
 INSERT INTO `anserws` (`id`, `anserw`, `is_correct`, `question_id`) VALUES
 (1, '7', NULL, 1),
 (2, '13', 1, 1),
-(3, '97', NULL, 1),
+(3, '13', 1, 1),
 (4, '49', NULL, 1),
 (5, 'widomy', NULL, 2),
 (6, 'niewidomy', 1, 2),
 (7, 'gluchy', NULL, 2),
-(8, 'spiacy', NULL, 2),
+(8, 'nie widzacy', 1, 2),
 (9, '\"', NULL, 3),
-(10, '|', NULL, 3),
+(10, 'zaprzeczenie jako znak', 1, 3),
 (11, '?', NULL, 3),
 (12, '!', 1, 3),
-(13, 'W', NULL, 3);
+(13, 'W', NULL, 3),
+(14, '3', 1, 4),
+(15, '1', NULL, 4),
+(16, '2', NULL, 4),
+(18, 'Nie', NULL, 5),
+(19, 'Tak', 1, 5),
+(20, 'Nie', NULL, 5),
+(21, 'Tak', NULL, 6),
+(22, 'Nie', 1, 6),
+(23, 'Tak', NULL, 6),
+(24, 'a', NULL, 7),
+(25, 'b', NULL, 7),
+(26, 'c', 1, 7),
+(29, 'a', 1, 8),
+(30, 'b', NULL, 8),
+(31, 'c', NULL, 8),
+(38, '65', NULL, 9),
+(39, '5', 1, 9),
+(40, '5', 1, 9),
+(41, '4', NULL, 9),
+(42, '5', 1, 9),
+(43, 'o', NULL, 10),
+(44, 'p', 1, 10),
+(45, 'p', 1, 10),
+(46, 'p', 1, 10),
+(47, 'n', NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -71,7 +98,14 @@ CREATE TABLE `questions` (
 INSERT INTO `questions` (`id`, `question`) VALUES
 (1, 'Ile to jest 4+9?'),
 (2, 'Kto jest niewidomy?'),
-(3, 'Znak negacji?');
+(3, 'Znak negacji?'),
+(4, 'Ile ma to odpowiedzi?'),
+(5, 'Czy tak?'),
+(6, 'Czy nie?'),
+(7, 'c?'),
+(8, 'a?'),
+(9, 'Ile to ma?'),
+(10, 'p?');
 
 -- --------------------------------------------------------
 
@@ -91,8 +125,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `right`, `wrong`) VALUES
-(1, 'Fabian', 2, 0),
-(2, 'Cezar', 0, 28);
+(1, 'Fabian', 17, 7),
+(2, 'Cezar', 5, 30);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -125,13 +159,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `anserws`
 --
 ALTER TABLE `anserws`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT dla tabeli `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`

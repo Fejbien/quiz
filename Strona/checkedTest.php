@@ -47,8 +47,10 @@
         $db->query("UPDATE `users` SET `wrong`=`wrong`+1 WHERE id = ".$_COOKIE["userID"].";");
     }
     
-    echo "<form action='question.php' method='POST'>
-            <input class='next' type='submit' value='Losowe pytanie'>
+    echo "<form action='test.php' method='POST'>
+            <input type='hidden' name='questionsArray' value=".$_POST["questionsArray"].">
+            <input type='hidden' name='questionNumber' value=".($_POST["questionNumber"]+1).">
+            <input class='next' type='submit' value='Nastepne pytanie'>
         </form>";
 
     $db->close();
